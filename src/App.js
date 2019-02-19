@@ -1,25 +1,25 @@
 import React, { Component , Fragment} from 'react';
 import './App.css';
 import {bake_cookie,read_cookie} from "sfcookies";
+import uuid from "uuid/v1";
+
 
 function saveToCookies(data) {
+  console.log(data);
    bake_cookie("jobs",JSON.stringify(data));
 }
 function getData() {
   console.log(read_cookie("jobs"))
-  var cookie = read_cookie("jobs");
+  var cookie = read_cookie("jobs")
   if (cookie.length <= 0){
     return {};
   }else{
+    console.log("cookies exist")
     return JSON.parse(cookie);
   }
 }
 
 class App extends Component {
-  constructor(props){
-    super(props);
-  }
-
   render(){
     return(
     <Fragment>
@@ -58,12 +58,20 @@ class JobList extends Component {
     super(props);
     console.log(this.props)
     this.state = getData();
+    this.handler = this.handler.bind(this);
+  }
+
+  handler(){
+    let data = getData();
+    console.log(data)
+    this.state = data;
+    console.log(this.state)
   }
 
   render(){    
     var cards = "";
     if (!(Object.keys(this.state).length === 0 && this.state.constructor === Object)){
-       cards = this.state.projects.map((data)=>{
+       cards = this.state.map((data)=>{
         return (
           <Fragment>
               <div className="col-sm-12 col-md-4">
@@ -79,8 +87,7 @@ class JobList extends Component {
                     </div>
                   </div>
                   <br/>
-              </div>      
-                   
+              </div>                         
           </Fragment>            
         );
       });
@@ -95,7 +102,7 @@ class JobList extends Component {
             {cards}    
           </div>
         </div>
-        <AddJobModal {...this.props}/>      
+        <AddJobModal {...this.state} action={this.handler}/>      
       </Fragment>
     );
   }
@@ -109,15 +116,19 @@ class AddJobModal extends Component {
     this.save = this.save.bind(this);
   }
   save(){
+    this.state.id = uuid();
     let temp = {};
-    if (!(Object.keys(this.props).length === 0 && this.props.constructor === Object)){
-      temp = this.props;
+
+   console.log(this.props.projects)
+    if (this.props.projects == undefined){
+      temp = [];
     }else{
-        temp.projects = [];
+      temp = this.props.projects
     }
-   console.log(temp); 
-   temp.projects.push(this.state);
-   saveToCookies(temp);
+    console.log(temp)
+    temp.push(this.state);
+    saveToCookies(temp);
+    this.props.action();
   }
   handleChange(evt){
     this.setState({
