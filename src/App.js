@@ -73,9 +73,9 @@ class JobList extends Component {
                        <h2>{data.empName}</h2>                     
                       </div>
                       <div className="card-text">{data.jobTitle}</div>
-                      <button href="" className="btn btn-info">Edit</button>
+                      <button  className="btn btn-info">Edit</button>
                        &nbsp;
-                      <button href="" className="btn btn-danger">delete</button>
+                      <button  className="btn btn-danger">delete</button>
                     </div>
                   </div>
                   <br/>
