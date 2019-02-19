@@ -8234,7 +8234,7 @@ react-dev-utils@^7.0.3:
     strip-ansi "5.0.0"
     text-table "0.2.0"
 
-react-dom@16.8.2:
+react-dom@^16.8.2:
   version "16.8.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.8.2.tgz#7c8a69545dd554d45d66442230ba04a6a0a3c3d3"
   integrity sha512-cPGfgFfwi+VCZjk73buu14pYkYBR1b/SRMSYqkLDdhSEHnSwcuYTPu6/Bh6ZphJFIk80XLvbSe2azfcRzNF+Xg==
@@ -8304,7 +8304,7 @@ react-scripts@2.1.5:
   optionalDependencies:
     fsevents "1.2.4"
 
-react@16.8.2:
+react@^16.8.2:
   version "16.8.2"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.2.tgz#83064596feaa98d9c2857c4deae1848b542c9c0c"
   integrity sha512-aB2ctx9uQ9vo09HVknqv3DGRpI7OIGJhCx3Bt0QqoRluEjHSaObJl+nG12GDdYH6sTgE7YiPJ6ZUyMx9kICdXw==
@@ -8906,6 +8906,11 @@ setprototypeof@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.1.0.tgz#d0bd85536887b6fe7c0d818cb962d9d91c54e656"
   integrity sha512-BvE/TwpZX4FXExxOxZyRGQQv651MSwmWKZGqvmPcRIjDqWub67kTKuIMx43cZZrS/cBBzwBcNDWoFxt2XEFIpQ==
+
+sfcookies@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/sfcookies/-/sfcookies-1.0.2.tgz#e2df7b4d4c9db15965bbab9a9ce72829daff5bb9"
+  integrity sha1-4t97TUydsVllu6uanOcoKdr/W7k=
 
 sha.js@^2.4.0, sha.js@^2.4.8:
   version "2.4.11"
