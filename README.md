@@ -1,4 +1,4 @@
-##Introduction
+## Introduction
 This is the repo for the JobSearchTracker website. This website allows jobsearchers to conveniantly track positions they have applied to.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
