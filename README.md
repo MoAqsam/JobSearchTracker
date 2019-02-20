@@ -1,5 +1,8 @@
+## Background
+I was applying for jobs and it was pretty hard to track when there are many different companies. So I decided to create a web app that will help me track all the jobs I've applied to. 
+
 ## Introduction
-This is the repo for the JobSearchTracker website. This website allows jobsearchers to conveniantly track positions they have applied to.
+This is the repo for the JobSearchTracker website. This website allows job searchers to conveniantly track positions they have applied to.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
