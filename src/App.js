@@ -12,7 +12,7 @@ function getData() {
   console.log(read_cookie("jobs"))
   var cookie = read_cookie("jobs")
   if (cookie.length <= 0){
-    return {};
+    return [];
   }else{
     console.log("cookies exist")
     return JSON.parse(cookie);
@@ -56,25 +56,51 @@ class MainView extends Component {
 class JobList extends Component {
   constructor(props){
     super(props);
-    console.log(this.props)
-    this.state = getData();
-    this.handler = this.handler.bind(this);
+    // data from cookies
+    this.importedData = getData();
+    //bind methods
+    this.handleChange = this.handleChange.bind(this);
+    this.save = this.save.bind(this);
+    this.state = {
+      id:""
+    }
+  }
+  
+  save(){
+    this.state.id = uuid();
+    let temp = [];
+    if (this.importedData.length != 0){
+      temp = this.importedData;
+    }
+    if (this.importedData.length === 0 ){
+      this.importedData.push(this.state)
+    }
+    
+    temp.push(this.state)
+    saveToCookies(temp);    
+    this.forceUpdate();
   }
 
-  handler(){
-    let data = getData();
-    console.log(data)
-    this.state = data;
-    console.log(this.state)
+  delete(data){
+    let {id} = data;
+    this.importedData.splice(this.importedData.findIndex(item=>item.field === id));
+    console.log(this.importedData)
+    saveToCookies(this.importedData);
+    this.forceUpdate();
   }
 
+  handleChange(evt){
+    this.setState({
+      [evt.target.name] : evt.target.value
+    });
+  }
   render(){    
     var cards = "";
-    if (!(Object.keys(this.state).length === 0 && this.state.constructor === Object)){
-       cards = this.state.map((data)=>{
+    if (!(Object.keys(this.importedData).length === 0 && this.importedData.constructor === Object)){
+       cards = this.importedData.map( (data)=>{
         return (
           <Fragment>
-              <div className="col-sm-12 col-md-4">
+              <div className="col-sm-12 col-md-4" key={data.id}>
                   <div className="card">
                     <div className="card-body text-center">
                       <div className="card-title">
@@ -83,7 +109,7 @@ class JobList extends Component {
                       <div className="card-text">{data.jobTitle}</div>
                       <button  className="btn btn-info">Edit</button>
                        &nbsp;
-                      <button  className="btn btn-danger">delete</button>
+                      <button  className="btn btn-danger" onClick={this.delete.bind(this,data)}>delete</button>
                     </div>
                   </div>
                   <br/>
@@ -102,42 +128,8 @@ class JobList extends Component {
             {cards}    
           </div>
         </div>
-        <AddJobModal {...this.state} action={this.handler}/>      
-      </Fragment>
-    );
-  }
-}
-
-class AddJobModal extends Component {
-  
-  constructor(props){
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.save = this.save.bind(this);
-  }
-  save(){
-    this.state.id = uuid();
-    let temp = {};
-
-   console.log(this.props.projects)
-    if (this.props.projects == undefined){
-      temp = [];
-    }else{
-      temp = this.props.projects
-    }
-    console.log(temp)
-    temp.push(this.state);
-    saveToCookies(temp);
-    this.props.action();
-  }
-  handleChange(evt){
-    this.setState({
-      [evt.target.name] : evt.target.value
-    });
-  }
-  render(){
-    return(
-      <div className="modal fade" id="openForm" tabIndex="-1" role="dialog" aria-labelledby="openForm" aria-hidden="true">
+      
+        <div className="modal fade" id="openForm" tabIndex="-1" role="dialog" aria-labelledby="openForm" aria-hidden="true">
       <div className="modal-dialog" role="document">
         <div className="modal-content">
           <div className="modal-header">
@@ -180,7 +172,8 @@ class AddJobModal extends Component {
           </div>
         </div>
       </div>
-     </div>
+     </div>  
+      </Fragment>
     );
   }
 }
