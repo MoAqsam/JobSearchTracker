@@ -24,7 +24,7 @@ class App extends Component {
     return(
     <Fragment>
       <div className="container-fluid">
-        <h1>Job Logger</h1>      
+        <h1>Job Tracker</h1>      
         <MainView/>
       </div>    
     </Fragment>
@@ -66,6 +66,12 @@ class JobList extends Component {
     }
   }
   
+  update(data){
+    console.log(data);
+    let {id} = data;
+    console.log(this.importedData.findIndex(item=>item.field === id))
+  }
+
   save(){
     this.state.id = uuid();
     let temp = [];
@@ -96,7 +102,8 @@ class JobList extends Component {
   }
   render(){    
     var cards = "";
-    if (!(Object.keys(this.importedData).length === 0 && this.importedData.constructor === Object)){
+    console.log(this.importedData)
+    if (!(this.importedData == 0)){
        cards = this.importedData.map( (data)=>{
         return (
           <Fragment>
@@ -106,26 +113,32 @@ class JobList extends Component {
                       <div className="card-title">
                        <h2>{data.empName}</h2>                     
                       </div>
-                      <div className="card-text">{data.jobTitle}</div>
-                      <button  className="btn btn-info">Edit</button>
+                      <div className="card-text">
+                        <b>{data.jobTitle}</b>
+                        <p>{data.note}</p>
+                        <p>Application date: {data.appDate}</p>
+                        <a href={data.jobURL}>{data.jobURL}</a>
+                      </div>                     
+                      {/* <button  className="btn btn-info" data-toggle="modal" data-target={"#"+data.id} >Edit</button> */}
                        &nbsp;
                       <button  className="btn btn-danger" onClick={this.delete.bind(this,data)}>delete</button>
                     </div>
                   </div>
                   <br/>
-              </div>                         
+              </div>       
+
           </Fragment>            
         );
       });
     }else{
-      cards = <h1>Lets get this jobs search going.</h1> 
+      cards = <h1 style={{textAlign:"center"}}>Nothing yet lets start the job search...</h1> 
     }
    
     return(
       <Fragment>
         <div className="container">
-          <div className="row">
-            {cards}    
+          <div className="row">          
+              {cards}                
           </div>
         </div>
       
@@ -154,7 +167,7 @@ class JobList extends Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="appDate">Application Date</label>
-                    <input className="form-control" type="text" name="appDate" onChange={this.handleChange}/>
+                    <input className="form-control" type="date" name="appDate" onChange={this.handleChange}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="contact">Contact</label>
@@ -162,7 +175,7 @@ class JobList extends Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="notes">Notes</label>
-                    <input className="form-control" type="text" name="note" onChange={this.handleChange}/>
+                    <textarea className="form-control" type="text" name="note" onChange={this.handleChange}/>
                 </div>
             </form>
           </div>
