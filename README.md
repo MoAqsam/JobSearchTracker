@@ -1,5 +1,8 @@
 ## Background
-I was applying for jobs and it was pretty hard to track my applications. So I decided to create a web app that wpuld help me track all the jobs I've applied to. 
+I was applying for jobs and it was pretty hard to track my applications. So I decided to create a web app that would help me track all the jobs I've applied to. 
+
+## Data Storage
+In order to circumvent using a database the website uses cookies to store your data. So If you clear your cookies then all the data will be lost. I believe using cookies is alright for this specific use case.
 
 ## Introduction
 This is the repo for the JobSearchTracker website. This website allows job searchers to conveniantly track positions they have applied to.
