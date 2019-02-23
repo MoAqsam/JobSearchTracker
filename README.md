@@ -1,5 +1,5 @@
 ## Background
-I was applying for jobs and it was pretty hard to track when there are many different companies. So I decided to create a web app that will help me track all the jobs I've applied to. 
+I was applying for jobs and it was pretty hard to track my applications. So I decided to create a web app that wpuld help me track all the jobs I've applied to. 
 
 ## Introduction
 This is the repo for the JobSearchTracker website. This website allows job searchers to conveniantly track positions they have applied to.
