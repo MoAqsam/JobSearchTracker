@@ -1,30 +1,30 @@
 import React, { Component , Fragment} from 'react';
 import './App.css';
 import {bake_cookie,read_cookie} from "sfcookies";
+import uuid from "uuid/v1";
+
 
 function saveToCookies(data) {
+  console.log(data);
    bake_cookie("jobs",JSON.stringify(data));
 }
 function getData() {
   console.log(read_cookie("jobs"))
-  var cookie = read_cookie("jobs");
+  var cookie = read_cookie("jobs")
   if (cookie.length <= 0){
-    return {};
+    return [];
   }else{
+    console.log("cookies exist")
     return JSON.parse(cookie);
   }
 }
 
 class App extends Component {
-  constructor(props){
-    super(props);
-  }
-
   render(){
     return(
     <Fragment>
       <div className="container-fluid">
-        <h1>Job Logger</h1>      
+        <h1>Job Tracker</h1>      
         <MainView/>
       </div>    
     </Fragment>
@@ -56,77 +56,93 @@ class MainView extends Component {
 class JobList extends Component {
   constructor(props){
     super(props);
-    console.log(this.props)
-    this.state = getData();
-  }
-
-  render(){    
-    var cards = "";
-    if (!(Object.keys(this.state).length === 0 && this.state.constructor === Object)){
-       cards = this.state.projects.map((data)=>{
-        return (
-          <Fragment>
-              <div className="col-sm-12 col-md-4">
-                  <div className="card">
-                    <div className="card-body text-center">
-                      <div className="card-title">
-                       <h2>{data.empName}</h2>                     
-                      </div>
-                      <div className="card-text">{data.jobTitle}</div>
-                      <button  className="btn btn-info">Edit</button>
-                       &nbsp;
-                      <button  className="btn btn-danger">delete</button>
-                    </div>
-                  </div>
-                  <br/>
-              </div>      
-                   
-          </Fragment>            
-        );
-      });
-    }else{
-      cards = <h1>Lets get this jobs search going.</h1> 
-    }
-   
-    return(
-      <Fragment>
-        <div className="container">
-          <div className="row">
-            {cards}    
-          </div>
-        </div>
-        <AddJobModal {...this.props}/>      
-      </Fragment>
-    );
-  }
-}
-
-class AddJobModal extends Component {
-  
-  constructor(props){
-    super(props);
+    // data from cookies
+    this.importedData = getData();
+    //bind methods
     this.handleChange = this.handleChange.bind(this);
     this.save = this.save.bind(this);
-  }
-  save(){
-    let temp = {};
-    if (!(Object.keys(this.props).length === 0 && this.props.constructor === Object)){
-      temp = this.props;
-    }else{
-        temp.projects = [];
+    this.state = {
+      id:""
     }
-   console.log(temp); 
-   temp.projects.push(this.state);
-   saveToCookies(temp);
   }
+  
+  update(data){
+    console.log(data);
+    let {id} = data;
+    console.log(this.importedData.findIndex(item=>item.field === id))
+  }
+
+  save(){
+    this.state.id = uuid();
+    let temp = [];
+    if (this.importedData.length != 0){
+      temp = this.importedData;
+    }
+    if (this.importedData.length === 0 ){
+      this.importedData.push(this.state)
+    }
+    
+    temp.push(this.state)
+    saveToCookies(temp);    
+    this.forceUpdate();
+  }
+
+  delete(data){
+    let {id} = data;
+    this.importedData.splice(this.importedData.findIndex(item=>item.field === id));
+    console.log(this.importedData)
+    saveToCookies(this.importedData);
+    this.forceUpdate();
+  }
+
   handleChange(evt){
     this.setState({
       [evt.target.name] : evt.target.value
     });
   }
-  render(){
+  render(){    
+    var cards = "";
+    console.log(this.importedData)
+    if (!(this.importedData == 0)){
+       cards = this.importedData.map( (data)=>{
+        return (
+          <Fragment>
+              <div className="col-sm-12 col-md-4" key={data.id}>
+                  <div className="card">
+                    <div className="card-body text-center">
+                      <div className="card-title">
+                       <h2>{data.empName}</h2>                     
+                      </div>
+                      <div className="card-text">
+                        <b>{data.jobTitle}</b>
+                        <p>{data.note}</p>
+                        <p>Application date: {data.appDate}</p>
+                        <a href={data.jobURL}>{data.jobURL}</a>
+                      </div>                     
+                      {/* <button  className="btn btn-info" data-toggle="modal" data-target={"#"+data.id} >Edit</button> */}
+                       &nbsp;
+                      <button  className="btn btn-danger" onClick={this.delete.bind(this,data)}>delete</button>
+                    </div>
+                  </div>
+                  <br/>
+              </div>       
+
+          </Fragment>            
+        );
+      });
+    }else{
+      cards = <h1 style={{textAlign:"center"}}>Nothing yet lets start the job search...</h1> 
+    }
+   
     return(
-      <div className="modal fade" id="openForm" tabIndex="-1" role="dialog" aria-labelledby="openForm" aria-hidden="true">
+      <Fragment>
+        <div className="container">
+          <div className="row">          
+              {cards}                
+          </div>
+        </div>
+      
+        <div className="modal fade" id="openForm" tabIndex="-1" role="dialog" aria-labelledby="openForm" aria-hidden="true">
       <div className="modal-dialog" role="document">
         <div className="modal-content">
           <div className="modal-header">
@@ -151,7 +167,7 @@ class AddJobModal extends Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="appDate">Application Date</label>
-                    <input className="form-control" type="text" name="appDate" onChange={this.handleChange}/>
+                    <input className="form-control" type="date" name="appDate" onChange={this.handleChange}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="contact">Contact</label>
@@ -159,7 +175,7 @@ class AddJobModal extends Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="notes">Notes</label>
-                    <input className="form-control" type="text" name="note" onChange={this.handleChange}/>
+                    <textarea className="form-control" type="text" name="note" onChange={this.handleChange}/>
                 </div>
             </form>
           </div>
@@ -169,7 +185,8 @@ class AddJobModal extends Component {
           </div>
         </div>
       </div>
-     </div>
+     </div>  
+      </Fragment>
     );
   }
 }
