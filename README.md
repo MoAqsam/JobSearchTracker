@@ -1,5 +1,5 @@
 ## Background
-I was applying for jobs and it was pretty hard to track my applications. So I decided to create a web app that would help me track all the jobs I've applied to. However, you can use it too to track all your job applications with a simple and intuitive UI just click here(https://moaqsam.github.io/JobSearchTracker/) to go to the live website.
+I was applying for jobs and it was pretty hard to track my applications. So I decided to create a web app that would help me track all the jobs I've applied to. However, you can use it to track all your job applications with a simple and intuitive UI just click here(https://moaqsam.github.io/JobSearchTracker/) to go to the live website.
 
 ## Data Storage
 In order to circumvent using a database the website uses cookies to store your data. So If you clear your cookies then all the data will be lost. I believe using cookies is alright for this specific use case.
