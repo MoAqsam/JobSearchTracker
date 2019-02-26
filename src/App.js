@@ -34,10 +34,6 @@ class App extends Component {
 export default App;
 
 class MainView extends Component {
-  constructor(props){
-    super(props);
-  }
-
   render(){
     return(
       <Fragment>
@@ -72,10 +68,12 @@ class JobList extends Component {
     console.log(this.importedData.findIndex(item=>item.field === id))
   }
 
-  save(){
-    this.state.id = uuid();
+  save(){   
+    this.setState({
+      id:uuid()
+    });
     let temp = [];
-    if (this.importedData.length != 0){
+    if (this.importedData.length !== 0){
       temp = this.importedData;
     }
     if (this.importedData.length === 0 ){
@@ -89,7 +87,9 @@ class JobList extends Component {
 
   delete(data){
     let {id} = data;
-    this.importedData.splice(this.importedData.findIndex(item=>item.field === id));
+    this.importedData = this.importedData.filter(function(obj){
+      return obj.id !== id;
+    }); 
     console.log(this.importedData)
     saveToCookies(this.importedData);
     this.forceUpdate();
@@ -103,7 +103,7 @@ class JobList extends Component {
   render(){    
     var cards = "";
     console.log(this.importedData)
-    if (!(this.importedData == 0)){
+    if (!(this.importedData.length === 0)){
        cards = this.importedData.map( (data)=>{
         return (
           <Fragment>
