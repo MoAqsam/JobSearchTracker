@@ -6,12 +6,15 @@ import uuid from "uuid/v1";
 
 function saveToCookies(data) {
   console.log(data);
-   bake_cookie("jobs",JSON.stringify(data));
+  localStorage.setItem("jobs",JSON.stringify(data));  
 }
+
 function getData() {
   console.log(read_cookie("jobs"))
-  var cookie = read_cookie("jobs")
-  if (cookie.length <= 0){
+  
+  var cookie = localStorage.getItem("jobs");
+  console.log(cookie)
+  if (cookie == null){
     return [];
   }else{
     console.log("cookies exist")
@@ -72,6 +75,9 @@ class JobList extends Component {
     this.setState({
       id:uuid()
     });
+    console.log("/////////");
+    console.log(this.state);
+    console.log("//////////");
     let temp = [];
     if (this.importedData.length !== 0){
       temp = this.importedData;
@@ -100,6 +106,7 @@ class JobList extends Component {
       [evt.target.name] : evt.target.value
     });
   }
+  
   render(){    
     var cards = "";
     console.log(this.importedData)
@@ -122,6 +129,7 @@ class JobList extends Component {
                       {/* <button  className="btn btn-info" data-toggle="modal" data-target={"#"+data.id} >Edit</button> */}
                        &nbsp;
                       <button  className="btn btn-danger" onClick={this.delete.bind(this,data)}>delete</button>
+                      <button className="btn btn-info" onClick={()=>(alert("clicked"))}>Edit</button>
                     </div>
                   </div>
                   <br/>
