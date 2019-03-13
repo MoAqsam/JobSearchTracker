@@ -1,13 +1,13 @@
 {
-  "main.css": "/JobSearchTracker/static/css/main.df596968.chunk.css",
-  "main.js": "/JobSearchTracker/static/js/main.c5349e21.chunk.js",
-  "main.js.map": "/JobSearchTracker/static/js/main.c5349e21.chunk.js.map",
+  "main.css": "/JobSearchTracker/static/css/main.b47d0082.chunk.css",
+  "main.js": "/JobSearchTracker/static/js/main.2b6c984f.chunk.js",
+  "main.js.map": "/JobSearchTracker/static/js/main.2b6c984f.chunk.js.map",
   "runtime~main.js": "/JobSearchTracker/static/js/runtime~main.385a88e9.js",
   "runtime~main.js.map": "/JobSearchTracker/static/js/runtime~main.385a88e9.js.map",
-  "static/js/2.d85ceb0d.chunk.js": "/JobSearchTracker/static/js/2.d85ceb0d.chunk.js",
-  "static/js/2.d85ceb0d.chunk.js.map": "/JobSearchTracker/static/js/2.d85ceb0d.chunk.js.map",
+  "static/js/2.2b50eef2.chunk.js": "/JobSearchTracker/static/js/2.2b50eef2.chunk.js",
+  "static/js/2.2b50eef2.chunk.js.map": "/JobSearchTracker/static/js/2.2b50eef2.chunk.js.map",
   "index.html": "/JobSearchTracker/index.html",
-  "precache-manifest.4e1e9e650f2be0b0b00edda9fe1486e0.js": "/JobSearchTracker/precache-manifest.4e1e9e650f2be0b0b00edda9fe1486e0.js",
+  "precache-manifest.b3d7fe9b8fc85703bff690f7f06e2327.js": "/JobSearchTracker/precache-manifest.b3d7fe9b8fc85703bff690f7f06e2327.js",
   "service-worker.js": "/JobSearchTracker/service-worker.js",
-  "static/css/main.df596968.chunk.css.map": "/JobSearchTracker/static/css/main.df596968.chunk.css.map"
+  "static/css/main.b47d0082.chunk.css.map": "/JobSearchTracker/static/css/main.b47d0082.chunk.css.map"
 }
