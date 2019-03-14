@@ -2,7 +2,7 @@
 I was applying for jobs and it was pretty hard to track my applications. So I decided to create a web app that would help me track all the jobs I've applied to. However, you can use it to track all your job applications with a simple and intuitive UI just click here(https://moaqsam.github.io/JobSearchTracker/) to go to the live website.
 
 ## Data Storage
-In order to circumvent using a database the website uses cookies to store your data. So If you clear your cookies then all the data will be lost. Using cookies for this use case is preferrable over a database.
+In order to circumvent using a database the website uses localStorage to store your data. LocalStorage is persistent so therefore valid for this specific use case. If you want to read more about localStorage use this link (https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
