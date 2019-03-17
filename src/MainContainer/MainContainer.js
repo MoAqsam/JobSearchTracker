@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import BootstrapModals from './../components/bootstrapModals/BootstrapModals';
 import uuid from "uuid";
+import BootstrapCards from '../components/bootstrapCards/BootstrapCards';
 
 class MainContainer extends Component {
 
@@ -10,7 +11,8 @@ class MainContainer extends Component {
         });
     }
 
-    delete(id) {
+    onDeleteCards(id) {
+        console.log(id);
         let jobs = JSON.parse(localStorage.getItem("aqsam_jobs"));
         jobs = jobs.filter((data) => {
             return (data.id !== id)
@@ -34,9 +36,25 @@ class MainContainer extends Component {
         this.forceUpdate();
     }
 
-    onUpdateModal(evt) {
+    onUpdateModal(id) {
         var _Jobs = JSON.parse(localStorage.getItem("aqsam_jobs"));
-        // unique id    
+        console.log(id);
+        console.log(_Jobs[0]);
+        for (var i = 0 ; i < _Jobs.length; i++){
+            for (let prop in _Jobs[i]) {
+               if(_Jobs[i].hasOwnProperty(prop)){
+                   if(_Jobs[i].id === id){
+                        if(this.state[prop] !== undefined){
+                            console.log(this.state[prop]);
+                            _Jobs[i][prop] = this.state[prop];
+                            console.log(_Jobs[i]);
+                        }   
+                   }                                   
+               }               
+            }
+        } 
+       localStorage.setItem("aqsam_jobs",JSON.stringify(_Jobs));  
+       this.forceUpdate();
     }
 
     mapJobs() {
@@ -45,46 +63,11 @@ class MainContainer extends Component {
         return (jobs.map((data, i) => {
             return (
                 <div key={i} className="col-sm-12 col-md-4">
-                    <div
-                        className="card "
-                        style={{
-                        textAlign: "center",
-                        margin: "10px 0px",
-                        minHeight: "300px",
-                        width: "100%"
-                    }}>
-                        <div className="card-body">
-                            <button
-                                className="btn edit-button"                                
-                                data-target={"#"+data.companyName}
-                                data-toggle="modal"
-                                >Edit</button>
-                            <br/>
-                            <div className="title">
-                                <h2
-                                    style={{
-                                    color: "#17a2b8"
-                                }}>{data.companyName}</h2>
-                            </div>
-                            <div className="card-text">
-                                <h4>{data.jobTitle}</h4>
-                                <h4>
-                                    <a href={data.jobUrl} target="_blank" rel="noopener noreferrer">{data.jobUrl}</a>
-                                </h4>
-                                <h4>{data.appDate}</h4>
-                                <h4>{data.contact}</h4>
-                                <h4>{data.notes}</h4>
-                            </div>
-                        </div>
-                        <button
-                            className="btn btn-danger"
-                            onClick={this
-                            .delete
-                            .bind(this, data.id)}
-                            style={{
-                            width: "100%"
-                        }}>Delete</button>
-                    </div>
+                    <BootstrapCards
+                        data={data}
+                        onDeleteCards={this
+                        .onDeleteCards
+                        .bind(this, data.id)}/>
                 </div>
 
             )
@@ -95,19 +78,16 @@ class MainContainer extends Component {
         let jobs = JSON.parse(localStorage.getItem("aqsam_jobs"));
         // Cards
         return (jobs.map((data, i) => {
-            return (
-                
-                    <BootstrapModals key={i}
-                        onChangeModal={this
-                        .onChangeModal
-                        .bind(this)}
-                        onUpdateModal={this
-                        .onUpdateModal
-                        .bind(this,data.id)}
-                        data={data}
-                        type="update"/>
-               
-            )
+            return (<BootstrapModals
+                key={i}
+                onChangeModal={this
+                .onChangeModal
+                .bind(this)}
+                onUpdateModal={this
+                .onUpdateModal
+                .bind(this, data.id)}
+                data={data}
+                type="update"/>)
         }));
     }
 
