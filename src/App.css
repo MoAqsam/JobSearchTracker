@@ -1,0 +1,10 @@
+.card-body .edit-button {
+    position: absolute;
+    top:0;
+    right:0;
+}
+
+.card-body .edit-button:hover {
+    color:white;
+    background: grey;
+}
