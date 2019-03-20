@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/JobSearchTracker/precache-manifest.c02ffde2373338be0bdbdd426f2375f5.js"
+  "/JobSearchTracker/precache-manifest.1bef699d4657ce8d29a912ce9fe39d53.js"
 );
 
 workbox.clientsClaim();
